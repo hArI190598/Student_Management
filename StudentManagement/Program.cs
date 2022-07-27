@@ -31,6 +31,7 @@ var builder = WebApplication.CreateBuilder(args);
     services.AddScoped<IAPIResponseHelper, APIResponseHelper>();
     services.AddScoped<IUserops,Userops>();
     services.AddSingleton<IUserRepo, userRepo>();
+   // services.AddScoped(TestController);
 
     services.AddSwaggerGen(c =>
     {

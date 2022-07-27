@@ -9,7 +9,7 @@ namespace StudentManagement.Operations
         private readonly ILogger _logger;
         private readonly IUserRepo _UserRepo;
         public Userops(IUserRepo userRepo, IConfiguration configuration,
-                            ILogger<Studentops> logger)
+                            ILogger<Userops> logger)
         {
             this._logger = logger;
             this._UserRepo = userRepo;
