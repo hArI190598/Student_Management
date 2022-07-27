@@ -7,6 +7,13 @@ using StudentManagement.Repository;
 using StudentManagement.Operations.Interface;
 using StudentManagement.Repository.Interface;
 using StudentManagement.Repository.Helpers.Interface;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using StudentManagement.Authentication;
+using System.Configuration;
+using Microsoft.Extensions.Logging;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,6 +29,8 @@ var builder = WebApplication.CreateBuilder(args);
     services.AddScoped<IStudentops, Studentops>();
     services.AddSingleton<IStudentRepo, StudentRepo>();
     services.AddScoped<IAPIResponseHelper, APIResponseHelper>();
+    services.AddScoped<IUserops,Userops>();
+    services.AddSingleton<IUserRepo, userRepo>();
 
     services.AddSwaggerGen(c =>
     {
@@ -35,7 +44,27 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+var key = "LectureTest1234$$$";
 
+builder.Services.AddAuthentication(x =>
+{
+    x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(x =>
+{
+    x.RequireHttpsMetadata = false;
+    x.SaveToken = true;
+    x.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(key)),
+        ValidateIssuer = false,
+        ValidateAudience = false
+    };
+});
+
+
+builder.Services.AddSingleton<JWTAuth>(new JWTAuth(key));
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -46,7 +75,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

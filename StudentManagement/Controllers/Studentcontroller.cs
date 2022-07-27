@@ -2,6 +2,7 @@
 using StudentManagement.Operations.Interface;
 using StudentManagement.Repository.Helpers.Interface;
 using StudentManagement.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace StudentManagement.Controllers
 {
@@ -29,10 +30,11 @@ namespace StudentManagement.Controllers
         [HttpGet("Name")]
         public IActionResult GetStudentByName([FromQuery] string Name)
         {
-            if (string.IsNullOrWhiteSpace(Name))
-            {
-                return BadRequest();
-            }
+
+            //if (string.IsNullOrWhiteSpace(Name))
+            //{
+            //    return BadRequest();
+            //}
             var response = _studentops.GetStudentByNameops(Name);
             return _responseHelper.CreateResponse(response);
         }
@@ -40,11 +42,12 @@ namespace StudentManagement.Controllers
         [HttpGet("{id}")]
 
         public IActionResult GetStudentById([FromRoute] int id)
-        {
-            if (id < 1)
-            {
-                return BadRequest();
-            }
+        { 
+        //{
+        //    if (id < 1)
+        //    {
+        //        return BadRequest();
+        //    }
             var response = _studentops.GetStudentByIdops(id);
             return _responseHelper.CreateResponse(response);
         }
@@ -54,23 +57,23 @@ namespace StudentManagement.Controllers
 
         public IActionResult SaveStudent([FromBody] Student savestudent)
         {
-            if (string.IsNullOrWhiteSpace(savestudent.Name))
-            {
-                return BadRequest();
-            }
+            //if (string.IsNullOrWhiteSpace(savestudent.Name))
+            //{
+            //    return BadRequest();
+            //}
             var response = _studentops.SaveStudentops(savestudent);
             return _responseHelper.CreateResponse(response);
 
         }
-
+        [Authorize]
         [HttpDelete("{id}")]
-
+        
         public IActionResult RemoveStudent([FromRoute] int id)
         {
-            if (id < 1)
-            {
-                return BadRequest();
-            }
+            //if (id < 1)
+            //{
+            //    return BadRequest();
+            //}
             var response = _studentops.RemoveStudentops(id);
             return _responseHelper.CreateResponse(response);
 
