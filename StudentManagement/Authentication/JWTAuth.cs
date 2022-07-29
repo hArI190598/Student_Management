@@ -14,10 +14,7 @@ namespace StudentManagement.Authentication
 {
     public class JWTAuth
     {
-
-        private readonly string key;
-        private readonly IUserops _userops;
-
+        private readonly string key;        
         public JWTAuth(string key)
         {
             this.key = key;

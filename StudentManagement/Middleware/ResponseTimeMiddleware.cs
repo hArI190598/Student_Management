@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 
 namespace StudentManagement.Middleware
 {
-    // You may need to install the Microsoft.AspNetCore.Http.Abstractions package into your project
     public class ResponseTimeMiddleware
     {
         private const string RESPONSE_HEADER_RESPONSE_TIME = "X-Response-Time-ms";
@@ -14,7 +13,6 @@ namespace StudentManagement.Middleware
         {
             _next = next;
         }
-
         public Task Invoke(HttpContext Context)
         {
             var watch = new Stopwatch();
@@ -28,9 +26,8 @@ namespace StudentManagement.Middleware
                 Context.Response.Headers[RESPONSE_HEADER_RESPONSE_TIME] = responseTimeForCompleteRequest.ToString();
                 return Task.CompletedTask;
             });
-            // Call the next delegate/middleware in the pipeline
-            return this._next(Context);
-
+                 // Call the next delegate/middleware in the pipeline
+                   return this._next(Context);
         }
     }
     
