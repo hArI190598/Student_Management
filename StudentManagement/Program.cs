@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using StudentManagement.Authentication;
 using System.Configuration;
 using Microsoft.Extensions.Logging;
+using StudentManagement.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -76,9 +77,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseMiddleware<ResponseTimeMiddleware>();
 app.UseAuthentication();
 app.UseAuthorization();
-
 app.MapControllers();
-
 app.Run();
