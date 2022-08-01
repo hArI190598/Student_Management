@@ -18,5 +18,10 @@ namespace StudentManagement.Operations
         {
             return _UserRepo.loginrepo(uname,pswd);
         }
+
+        public int RegisterOps(string uname, string pswd)
+        {
+            return _UserRepo.Registerrepo(uname, pswd);
+        }
     }
 }

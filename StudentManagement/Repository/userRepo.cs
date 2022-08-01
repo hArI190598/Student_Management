@@ -39,5 +39,28 @@ namespace StudentManagement.Repository
                 return -1;
             }
         }
+
+        public int Registerrepo(string username, string password)
+        { 
+        try
+            {
+              // var UserList = new List<User>();
+                var conStr = this._Configuration.GetConnectionString("Default");    
+                var con = new MySqlConnection(conStr);
+                var cmd = new MySqlCommand("Register_SP", con);
+                con.Open();
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("_uname",username);
+                cmd.Parameters.AddWithValue("_pswd",password);
+                int result = Convert.ToInt32(cmd.ExecuteScalar());
+               con.Close();
+                return result  ;
+            }
+            catch (Exception e)
+            {
+                logger.LogError(e.Message);
+                return -1;
+            }
+        }
     }
 }

@@ -139,11 +139,11 @@ namespace StudentManagement.Repository
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("_stuName", student.Name);
                 cmd.Parameters.AddWithValue("_stuId", student.Id);
-                var applicationId = Convert.ToInt32(cmd.ExecuteScalar());
+                var studentId = Convert.ToInt32(cmd.ExecuteScalar());
 
                 con.Close();
 
-                return applicationId;
+                return studentId;
             }
             catch (Exception e)
             {

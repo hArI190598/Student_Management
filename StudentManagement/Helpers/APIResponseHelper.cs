@@ -20,6 +20,8 @@ namespace StudentManagement.Helpers
             {
                 if (result == -400)
                     return new StatusCodeResult(StatusCodes.Status400BadRequest);
+                else if(result == -1)
+                    return new StatusCodeResult(StatusCodes.Status400BadRequest);
                 else
                     return result < 0 ? new StatusCodeResult(StatusCodes.Status500InternalServerError) : new OkResult();
             }
